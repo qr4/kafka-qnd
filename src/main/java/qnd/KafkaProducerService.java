@@ -4,6 +4,9 @@ import java.util.Properties;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,16 +15,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaProducerService {
     private static final String TOPIC = "qnd";
+    private static final Logger LOG = LoggerFactory.getLogger( KafkaProducerService.class );
 
     final private KafkaProducer<String, String> producer;
 
     public KafkaProducerService() {
         final Properties props = new Properties();
-        props.setProperty( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "http://localhost:9092" );
-        props.setProperty( ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer" );
-        props.setProperty( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer" );
-        props.setProperty( ProducerConfig.ACKS_CONFIG, "all" ); // all replicas need to get the message for it to be accepted
-        props.setProperty( ProducerConfig.RETRIES_CONFIG, "3" ); // retry 3 times if send failed
+        props.setProperty( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092" );
+        props.setProperty( ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName() );
+        props.setProperty( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName() );
         props.setProperty( ProducerConfig.CLIENT_ID_CONFIG, "qnd-producer" );
 
         producer = new KafkaProducer<>( props );

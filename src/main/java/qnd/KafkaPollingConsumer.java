@@ -4,19 +4,25 @@ import java.util.Properties;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Vitali Henne (vitali.henne@freiheit.com).
  */
 public class KafkaPollingConsumer implements Runnable {
     private static final String TOPIC = "qnd";
+    private static final Logger LOG = LoggerFactory.getLogger( KafkaPollingConsumer.class );
+
     private final KafkaConsumer<String, String> kafkaConsumer;
 
-    public KafkaPollingConsumer( ) {
+    public KafkaPollingConsumer() {
+        LOG.info( "creating consumer" );
         final Properties props = new Properties();
-        props.setProperty( ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "http://localhost:9092" );
-        props.setProperty( ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer" );
-        props.setProperty( ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer" );
+        props.setProperty( ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092" );
+        props.setProperty( ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName() );
+        props.setProperty( ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName() );
         props.setProperty( ConsumerConfig.GROUP_ID_CONFIG, "PollingConsumer" );
 
         // we want to commit our selves, this should result in a at-least-once consumer
@@ -27,8 +33,10 @@ public class KafkaPollingConsumer implements Runnable {
 
     @Override
     public void run() {
-        // 1. Poll from the TOPIC
-        // 2. For each received ConsumerRecord print its partition and the value
-        // 3. after processing a record commit
+        // TODO implement me
+        // 1. Subscribe to TOPIC
+        // 2. Poll from the TOPIC
+        // 3. For each received ConsumerRecord print its partition and the value
+        // 4. IMPORTANT!!!! after processing records, commit
     }
 }

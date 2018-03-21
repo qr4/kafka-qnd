@@ -18,7 +18,7 @@ public class KafkaStreamsConsumer {
 
     public KafkaStreamsConsumer() {
         final Properties props = new Properties();
-        props.setProperty( StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "http://localhost:9092" );
+        props.setProperty( StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka.localhost:9092" );
         props.setProperty( StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName() );
         props.setProperty( StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName() );
         props.setProperty( StreamsConfig.APPLICATION_ID_CONFIG, "KafkaStreamsConsumer" );
@@ -32,7 +32,9 @@ public class KafkaStreamsConsumer {
     }
 
     void start() {
-        kafkaStreams.start();
-        Runtime.getRuntime().addShutdownHook( new Thread( kafkaStreams::close ) );
+        if ( kafkaStreams != null ) {
+            kafkaStreams.start();
+            Runtime.getRuntime().addShutdownHook( new Thread( kafkaStreams::close ) );
+        }
     }
 }

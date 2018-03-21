@@ -20,7 +20,7 @@ public class KafkaPollingConsumer implements Runnable {
     public KafkaPollingConsumer() {
         LOG.info( "creating consumer" );
         final Properties props = new Properties();
-        props.setProperty( ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092" );
+        props.setProperty( ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka.localhost:9092" );
         props.setProperty( ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName() );
         props.setProperty( ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName() );
         props.setProperty( ConsumerConfig.GROUP_ID_CONFIG, "PollingConsumer" );

@@ -21,7 +21,7 @@ public class KafkaProducerService {
 
     public KafkaProducerService() {
         final Properties props = new Properties();
-        props.setProperty( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092" );
+        props.setProperty( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka.localhost:9092" );
         props.setProperty( ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName() );
         props.setProperty( ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName() );
         props.setProperty( ProducerConfig.CLIENT_ID_CONFIG, "qnd-producer" );

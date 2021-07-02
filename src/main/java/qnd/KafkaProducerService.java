@@ -1,9 +1,11 @@
 package qnd;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +36,17 @@ public class KafkaProducerService {
         // 1. create ProducerRecord with the TOPIC, key (optional), message
         // 2. send it with producer.send
         // 3. resolve the future
+        try {
+            this.producer.send(new ProducerRecord(TOPIC, msg)).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendMessageAsynchronously( final String msg ) {
         // TODO implement me
         // 1. create ProducerRecord with the TOPIC, key (optional), message
         // 2. send it with producer.send
+        this.producer.send(new ProducerRecord(TOPIC, msg));
     }
 }

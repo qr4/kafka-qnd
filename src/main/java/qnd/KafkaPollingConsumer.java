@@ -1,8 +1,12 @@
 package qnd;
 
+import java.lang.reflect.Array;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -33,6 +37,18 @@ public class KafkaPollingConsumer implements Runnable {
 
     @Override
     public void run() {
+        ArrayList<String> topics = new ArrayList<>();
+        topics.add(TOPIC);
+        kafkaConsumer.subscribe(topics);
+        while (true) {
+
+            ConsumerRecords<String, String> results = kafkaConsumer.poll(-1);
+            results.forEach((a -> {
+                LOG.info("partition: " + a.partition() + ", data:" + a.value());
+            }));
+
+            kafkaConsumer.commitSync();
+        }
         // TODO implement me
         // 1. Subscribe to TOPIC
         // 2. Poll from the TOPIC

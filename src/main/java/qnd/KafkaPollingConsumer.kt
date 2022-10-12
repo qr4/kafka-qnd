@@ -16,7 +16,7 @@ class KafkaPollingConsumer : Runnable {
             ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to Config.valueDeserializerClassName,
             ConsumerConfig.GROUP_ID_CONFIG to "PollingConsumer",
 
-            // we want to commit our selves, this should result in a at-least-once consumer
+            // we want to commit ourselves, this should result in an at-least-once consumer
             ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG to "false"
         )
 

@@ -4,7 +4,7 @@ import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
 
 object Config {
-    const val POLLING_CONSUMERS_COUNT  = 0;
+    const val POLLING_CONSUMERS_COUNT = 5
 
     const val KAFKA_URL = "kafka.localhost:9092"
     const val TEST_TOPIC = "qnd"
